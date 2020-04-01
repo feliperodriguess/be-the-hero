@@ -18,7 +18,7 @@ module.exports = {
                   'ongs.city', 
                   'ongs.uf']);
 
-    res.header('X-Total-Count', totalCases['count(*)'] - 2);
+    res.header('X-Total-Count', totalCases['count(*)']);
 
     return res.json(cases);
   },
