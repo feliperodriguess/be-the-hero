@@ -7,10 +7,10 @@ module.exports = {
     const [totalCases] = await databaseConnection('cases').count();
 
     const cases = await databaseConnection('cases')
-          .join('ongs', 'ong_id', '=', 'cases.ong_id')
+          .join('ongs', 'ongs.id', '=', 'cases.ong_id')
           .limit(5)
           .offset((page -1)*5)
-          .select([
+          .select([ 
                   'cases.*', 
                   'ongs.name', 
                   'ongs.email', 
@@ -18,7 +18,7 @@ module.exports = {
                   'ongs.city', 
                   'ongs.uf']);
 
-    res.header('X-Total-Count', totalCases['count(*)']);
+    res.header('X-Total-Count', totalCases['count(*)'] - 2);
 
     return res.json(cases);
   },
@@ -41,12 +41,12 @@ module.exports = {
     const { id } = req.params;
     const ong_id = req.headers.authorization;
 
-    const caso = await databaseConnection('cases')
+    const cause = await databaseConnection('cases')
           .where('id', id)
           .select('ong_id')
           .first();
 
-    if (caso.ong_id !== ong_id) {
+    if (cause.ong_id !== ong_id) {
       return res.status(401).json({ error: 'Operation not authorized.'});
     }
 
