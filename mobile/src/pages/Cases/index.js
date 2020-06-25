@@ -81,7 +81,6 @@ export default function Cases() {
           </View>
          )}
       />
-
     </View>
   );
 }
